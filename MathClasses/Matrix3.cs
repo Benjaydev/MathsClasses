@@ -83,6 +83,7 @@ namespace MathClasses
             return new Vector3(0, 0, 0);
         }
 
+        // Transpose this matrix
         public void Transpose()
         {
             Matrix3 temp = new Matrix3();
@@ -92,8 +93,6 @@ namespace MathClasses
 
             this = temp;
         }
-
-
 
         // Set rotation of matrix (This will replace all values already in matrix)
         // Set rotation of X

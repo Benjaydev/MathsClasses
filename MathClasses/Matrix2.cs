@@ -15,7 +15,6 @@ namespace MathClasses
 
         public float m00, m10;
         public float m01, m11;
-        public Vector2[] _col;
 
 
         // Construct matrix with single value
@@ -25,15 +24,12 @@ namespace MathClasses
             m00 = m11 = m;
             // Set the rest of the values to 0
             m01 = m10  = 0;
-
-            _col = new Vector2[2];
         }
         public Matrix2(float M00, float M01, float M10, float M11)
         {
             // Set each value in the matrix
             m00 = M00; m10 = M10;
             m01 = M01; m11 = M11;
-            _col = new Vector2[2];
         }
 
         // Set each value in the matrix
@@ -47,36 +43,6 @@ namespace MathClasses
         {
             m00 = m.m00; m10 = m.m10;
             m01 = m.m01; m11 = m.m11;
-        }
-
-        
-        public float this[int row, int col]
-        {
-            get
-            {
-                if (row == 0)
-                {
-                    return _col[col].x;
-                }
-                if (row == 1)
-                {
-                    return _col[col].y;
-                }
-                return 0;
-
-            }
-            set
-            {
-                if(row == 0)
-                {
-                    _col[col].x = value;
-                }
-                if(row == 1)
-                {
-                    _col[col].y = value;
-                }
-            }
-           
         }
 
         // Get specific row of the matrix, this allows for cleaner code when trying to access individual rows
@@ -117,9 +83,10 @@ namespace MathClasses
             return new Vector2(0, 0);
         }
 
-        /*
+        
         // Set rotation of matrix (This will replace all values already in matrix)
         // Set rotation of X
+        /*
         public void SetRotateX(double rad)
         {
             Set(1, 0, 0, 0, (float)Math.Cos(rad), (float)Math.Sin(rad), 0, -(float)Math.Sin(rad), (float)Math.Cos(rad));
@@ -134,55 +101,44 @@ namespace MathClasses
         {
             Set((float)Math.Cos(rad), (float)Math.Sin(rad), 0, -(float)Math.Sin(rad), (float)Math.Cos(rad), 0, 0, 0, 1);
         }
+        
 
-        // Rotate the z axis of matrix by radians
-        public void RotateZ(double radZ)
-        {
-            // Make new matrix for each axis
-            Matrix2 z = new Matrix2();
-            // Set rotate for each new matrix
-            z.SetRotateZ(radZ);
-
-            // Apply rotations to this matrix by multiplying it by each axis matrix and setting
-            Set(this * z);
-
-        }
 
         // Rotate all axes
-        public void Rotate(double radX, double radY, double radZ)
+        public void Rotate(double radX, double radY)
         {
             // Make new matrix for each axis
             Matrix2 x = new Matrix2();
             Matrix2 y = new Matrix2();
-            Matrix2 z = new Matrix2();
             // Set rotate for each new matrix
             x.SetRotateX(radX);
             y.SetRotateY(radY);
-            z.SetRotateZ(radZ);
 
             // Apply rotations to this matrix by multiplying it by each axis matrix and setting
-            Set(this * z);
             Set(this * y);
             Set(this * x);
 
         }
 
         // Rotate multiple axes at once
-        public void SetRotate(float pitchX, float yawY, float rollZ)
+        public void SetRotate(float pitchX, float yawY)
         {
             // Make new matrix for each axis
             Matrix2 x = new Matrix2();
             Matrix2 y = new Matrix2();
-            Matrix2 z = new Matrix2();
 
             // Set rotate for each value
             x.SetRotateX(pitchX);
             y.SetRotateY(yawY);
-            z.SetRotateZ(rollZ);
 
             // Combine the rotations
-            Set(z * y * x);
+            Set(y * x);
         }
+
+        */
+
+
+
         // Set scale of matrix
         public void SetScaled(float x, float y)
         {
@@ -200,15 +156,15 @@ namespace MathClasses
 
         public void Translate(float x, float y)
         {
-            m20 = m20 + x; m21 = m21 + y;
+            m10 = m10 + x; m11 = m11 + y;
         }
 
         // Set translation
         public void SetTranslation(float x, float y)
         {
-            m20 = x; m21 = y;
+            m10 = x; m11 = y;
         }
-        */
+        
         
         // Overload Matrix multiplied by Vector operator (Vector transformation)
         public static Vector3 operator *(Matrix2 M, Vector2 v)

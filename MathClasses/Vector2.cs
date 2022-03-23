@@ -43,12 +43,6 @@ namespace MathClasses
             y /= magnitude;
         }
 
-        // Calculate and return the cross product of this vector and another vector
-        public float Cross(Vector2 v)
-        {
-            return (x * v.y) - (y * v.x);
-        }
-
         // Overload addition operator for adding vector and vector (Translation)
         public static Vector2 operator +(Vector2 v1, Vector2 v2)
         {
