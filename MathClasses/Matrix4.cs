@@ -87,6 +87,17 @@ namespace MathClasses
             return new Vector4(0, 0, 0, 0);
         }
 
+        public void Transpose()
+        {
+            Matrix4 temp = new Matrix4();
+            temp.m00 = m00; temp.m10 = m01; temp.m20 = m02; temp.m30 = m03;
+            temp.m01 = m10; temp.m11 = m11; temp.m21 = m12; temp.m31 = m13; 
+            temp.m02 = m20; temp.m12 = m21; temp.m22 = m22; temp.m32 = m23;
+            temp.m03 = m30; temp.m13 = m31; temp.m23 = m32; temp.m33 = m33;
+
+            this = temp;
+        }
+
         // Set rotation of matrix (This will replace all values already in matrix)
         // Set rotation of X
         public void SetRotateX(double rad)
