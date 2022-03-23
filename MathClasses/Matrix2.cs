@@ -9,13 +9,18 @@ using MathClasses;
 namespace MathClasses
 {
 
-    public struct Matrix2
+    public class Matrix2
     {
         // Initialise the matrix values
 
         public float m00, m10;
         public float m01, m11;
 
+
+        public Matrix2()
+        {
+            m00 = m10 = m01 = m11 = 0;
+        }
 
         // Construct matrix with single value
         public Matrix2(float m)
@@ -64,9 +69,9 @@ namespace MathClasses
         {
             Matrix2 temp = new Matrix2();
             temp.m00 = m00; temp.m10 = m01;
-            temp.m01 = m10; temp.m11 = m11; 
+            temp.m01 = m10; temp.m11 = m11;
 
-            this = temp;
+            Set(temp);
         }
 
         // Get specific column of the matrix, this allows for cleaner code when trying to access individual columns
@@ -86,56 +91,41 @@ namespace MathClasses
         
         // Set rotation of matrix (This will replace all values already in matrix)
         // Set rotation of X
-        /*
-        public void SetRotateX(double rad)
-        {
-            Set(1, 0, 0, 0, (float)Math.Cos(rad), (float)Math.Sin(rad), 0, -(float)Math.Sin(rad), (float)Math.Cos(rad));
-        }
-        // Set rotation of Y
-        public void SetRotateY(double rad)
-        {
-            Set((float)Math.Cos(rad), 0, -(float)Math.Sin(rad), 0, 1, 0, (float)Math.Sin(rad), 0, (float)Math.Cos(rad));
-        }
-        // Set rotation of Z
-        public void SetRotateZ(double rad)
-        {
-            Set((float)Math.Cos(rad), (float)Math.Sin(rad), 0, -(float)Math.Sin(rad), (float)Math.Cos(rad), 0, 0, 0, 1);
-        }
         
+        public void SetRotate(double rad)
+        {
+            Set((float)Math.Cos(rad), -(float)Math.Sin(rad), (float)Math.Sin(rad), (float)Math.Cos(rad));
+        }
+
 
 
         // Rotate all axes
-        public void Rotate(double radX, double radY)
+        public void Rotate(double rad)
         {
             // Make new matrix for each axis
-            Matrix2 x = new Matrix2();
-            Matrix2 y = new Matrix2();
+            Matrix2 rotated = new Matrix2();
             // Set rotate for each new matrix
-            x.SetRotateX(radX);
-            y.SetRotateY(radY);
+            rotated.SetRotate(rad);
 
             // Apply rotations to this matrix by multiplying it by each axis matrix and setting
-            Set(this * y);
-            Set(this * x);
+            Set(this * rotated);
 
         }
 
         // Rotate multiple axes at once
-        public void SetRotate(float pitchX, float yawY)
+        public void SetRotate(float rad)
         {
             // Make new matrix for each axis
-            Matrix2 x = new Matrix2();
-            Matrix2 y = new Matrix2();
+            Matrix2 rotated = new Matrix2();
 
             // Set rotate for each value
-            x.SetRotateX(pitchX);
-            y.SetRotateY(yawY);
+            rotated.SetRotate(rad);
 
             // Combine the rotations
-            Set(y * x);
+            Set(rotated);
         }
 
-        */
+        
 
 
 

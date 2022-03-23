@@ -7,13 +7,19 @@ using System.Diagnostics;
 
 namespace MathClasses
 {
-    public struct Matrix4
+    public class Matrix4
     {
         // Initialise matrix values
         public float m00, m01, m02, m03;
         public float m10, m11, m12, m13;
         public float m20, m21, m22, m23;
         public float m30, m31, m32, m33;
+
+
+        public Matrix4()
+        {
+            m00 = m11 = m22 = m33 = m01 = m02 = m03 = m10 = m12 = m13 = m20 = m21 = m23 = m30 = m31 = m32 = 0;
+        }
 
         // Construct matrix with single value
         public Matrix4(float m)
@@ -41,6 +47,14 @@ namespace MathClasses
             m01 = M01; m11 = M11; m21 = M21; m31 = M31;
             m02 = M02; m12 = M12; m22 = M22; m32 = M32;
             m03 = M03; m13 = M13; m23 = M23; m33 = M33;
+        }
+        // Set each value in the matrix
+        public void Set(Matrix4 m)
+        {
+            m00 = m.m00; m10 = m.m10; m20 = m.m20; m30 = m.m30;
+            m01 = m.m01; m11 = m.m11; m21 = m.m21; m31 = m.m31;
+            m02 = m.m02; m12 = m.m12; m22 = m.m22; m32 = m.m32;
+            m03 = m.m03; m13 = m.m13; m23 = m.m23; m33 = m.m33;
         }
 
         // Get specific row of the matrix, this allows for cleaner code when trying to access individual rows
@@ -95,7 +109,7 @@ namespace MathClasses
             temp.m02 = m20; temp.m12 = m21; temp.m22 = m22; temp.m32 = m23;
             temp.m03 = m30; temp.m13 = m31; temp.m23 = m32; temp.m33 = m33;
 
-            this = temp;
+            Set(temp);
         }
 
         // Set rotation of matrix (This will replace all values already in matrix)

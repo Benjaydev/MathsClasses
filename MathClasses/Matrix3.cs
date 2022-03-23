@@ -7,13 +7,17 @@ using System.Threading.Tasks;
 namespace MathClasses
 {
 
-    public struct Matrix3
+    public class Matrix3
     {
         // Initialise the matrix values
         public float m00, m01, m02;
         public float m10, m11, m12;
         public float m20, m21, m22;
 
+        public Matrix3()
+        {
+            m00 = m11 = m22 = m01 = m02 = m10 = m12 = m20 = m21 = 0;
+        }
 
         // Construct matrix with single value
         public Matrix3(float m)
@@ -91,7 +95,7 @@ namespace MathClasses
             temp.m01 = m10; temp.m11 = m11; temp.m21 = m12;
             temp.m02 = m20; temp.m12 = m21; temp.m22 = m22;
 
-            this = temp;
+            Set(temp);
         }
 
         // Set rotation of matrix (This will replace all values already in matrix)
