@@ -26,6 +26,31 @@ namespace MathClasses
             w = W;
         }
 
+        public float this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case 0: return x;
+                    case 1: return y;
+                    case 2: return z;
+                    case 3: return w;
+                    default:return 0;
+                }
+            }
+            set
+            {
+                switch (index)
+                {
+                    case 0: x = value; break; 
+                    case 1: y = value; break;
+                    case 2: z = value; break;
+                    case 3: w = value; break;
+                }
+            }
+        }
+
         // Calculate and return the dot product of this vector and another vector
         public float Dot(Vector4 v)
         {

@@ -40,6 +40,27 @@ namespace MathClasses
             m03 = M03; m13 = M13; m23 = M23; m33 = M33;
         }
 
+        public float this[int col, int row]
+        {
+            get
+            {
+                if (col >= 0 && col <= 3 && row >= 0 && row <= 3)
+                {
+                    return (float)this.GetType().GetField($"m{col}{row}").GetValue(this);
+                }
+                return 0;
+            }
+            set
+            { 
+                if (col >= 0 && col <= 3 && row >= 0 && row <= 3)
+                {
+                    this.GetType().GetField($"m{col}{row}").SetValue(this, value);
+                }
+            }
+        }
+
+
+
         // Set each value in the matrix
         public void Set(float M00, float M01, float M02, float M03, float M10, float M11, float M12, float M13, float M20, float M21, float M22, float M23, float M30, float M31, float M32, float M33)
         {
