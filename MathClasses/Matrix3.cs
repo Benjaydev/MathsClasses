@@ -34,6 +34,11 @@ namespace MathClasses
             m01 = M01; m11 = M11; m21 = M21;
             m02 = M02; m12 = M12; m22 = M22;
         }
+        // Copy constructor
+        public Matrix3(Matrix3 m)
+        {
+            Set(m);
+        }
 
         // Set each value in the matrix
         public void Set(float M00, float M01, float M02, float M10, float M11, float M12, float M20, float M21, float M22)
@@ -87,6 +92,28 @@ namespace MathClasses
             return new Vector3(0, 0, 0);
         }
 
+
+        // Override index operator for accessing individual elements in this matrix
+        public float this[int col, int row]
+        {
+            get
+            {
+                if (col >= 0 && col <= 2 && row >= 0 && row <= 2)
+                {
+                    return (float)this.GetType().GetField($"m{col}{row}").GetValue(this);
+                }
+                return 0;
+            }
+            set
+            {
+                if (col >= 0 && col <= 2 && row >= 0 && row <= 2)
+                {
+                    this.GetType().GetField($"m{col}{row}").SetValue(this, value);
+                }
+            }
+        }
+
+
         // Transpose this matrix
         public void Transpose()
         {
@@ -132,6 +159,22 @@ namespace MathClasses
             Set(this * x);
 
         }
+        // Set rotation of multiple axes at once
+        public void SetRotate(float pitchX, float yawY, float rollZ)
+        {
+            // Make new matrix for each axis
+            Matrix3 x = new Matrix3();
+            Matrix3 y = new Matrix3();
+            Matrix3 z = new Matrix3();
+
+            // Set rotate for each value
+            x.SetRotateX(pitchX);
+            y.SetRotateY(yawY);
+            z.SetRotateZ(rollZ);
+
+            // Combine the rotations
+            Set(z * y * x);
+        }
 
         // Rotate multiple axis at once
         public void SetEuler(float pitchX, float yawY, float rollZ)
@@ -150,6 +193,34 @@ namespace MathClasses
             Set(z * y * x);
         }
 
+        // Set scale of matrix
+        public void SetScaled(float x, float y, float z)
+        {
+            m00 = x; m01 = 0; m02 = 0;
+            m10 = 0; m11 = y; m12 = 0;
+            m20 = 0; m21 = 0; m22 = z;
+        }
+
+        // Scale the matrix
+        public void Scale(float x, float y, float z)
+        {
+            Matrix3 m = new Matrix3();
+            m.SetScaled(x, y, z);
+
+            Set(this * m);
+        }
+
+        // Get the scale of matrix
+        public Vector3 GetScale()
+        {
+            return new Vector3(GetColumn(0).Magnitude(), GetColumn(1).Magnitude(), GetColumn(2).Magnitude());
+        }
+
+        // Translate matrix
+        public void Translate(float x, float y)
+        {
+            m20 = m20 + x; m21 = m21 + y;
+        }
         // Set translation
         public void SetTranslation(float x, float y)
         {
@@ -183,5 +254,6 @@ namespace MathClasses
                 M1.GetRow(1).Dot(M2.GetColumn(2)),
                 M1.GetRow(2).Dot(M2.GetColumn(2)));
         }
+
     }
 }
