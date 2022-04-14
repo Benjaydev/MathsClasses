@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathClasses
+namespace MathsClasses
 {
     public class Vector2
     {
         // Initialise vector values
         public float x, y;
 
-        // Constructor
+        // Default Constructor
         public Vector2()
         {
             x = y = 0;
@@ -23,6 +23,8 @@ namespace MathClasses
             x = X;
             y = Y;
         }
+        
+        // Copy constructor
         public Vector2(Vector2 v)
         {
             x = v.x;

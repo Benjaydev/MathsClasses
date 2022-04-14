@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace MathClasses
+namespace MathsClasses
 {
     public class Matrix4
     {
@@ -16,6 +16,7 @@ namespace MathClasses
         public float m30, m31, m32, m33;
 
 
+        // Constructor
         public Matrix4()
         {
             m00 = m11 = m22 = m33 = m01 = m02 = m03 = m10 = m12 = m13 = m20 = m21 = m23 = m30 = m31 = m32 = 0;
@@ -127,6 +128,7 @@ namespace MathClasses
             return new Vector4(0, 0, 0, 0);
         }
 
+        // Transpose the matrix
         public void Transpose()
         {
             Matrix4 temp = new Matrix4();

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathClasses
+namespace MathsClasses
 {
 
     public class Matrix3
@@ -53,6 +53,17 @@ namespace MathClasses
             m00 = m.m00; m10 = m.m10; m20 = m.m20;
             m01 = m.m01; m11 = m.m11; m21 = m.m21;
             m02 = m.m02; m12 = m.m12; m22 = m.m22;
+        }
+
+        // Transpose this matrix
+        public void Transpose()
+        {
+            Matrix3 temp = new Matrix3();
+            temp.m00 = m00; temp.m10 = m01; temp.m20 = m02;
+            temp.m01 = m10; temp.m11 = m11; temp.m21 = m12;
+            temp.m02 = m20; temp.m12 = m21; temp.m22 = m22;
+
+            Set(temp);
         }
 
         // Get specific row of the matrix, this allows for cleaner code when trying to access individual rows
@@ -113,19 +124,7 @@ namespace MathClasses
             }
         }
 
-
-        // Transpose this matrix
-        public void Transpose()
-        {
-            Matrix3 temp = new Matrix3();
-            temp.m00 = m00; temp.m10 = m01; temp.m20 = m02;
-            temp.m01 = m10; temp.m11 = m11; temp.m21 = m12;
-            temp.m02 = m20; temp.m12 = m21; temp.m22 = m22;
-
-            Set(temp);
-        }
-
-        // Set rotation of matrix (This will replace all values already in matrix)
+        // Set rotation of matrix (This will reset the whole matrix)
         // Set rotation of X
         public void SetRotateX(double rad)
         {
@@ -142,6 +141,7 @@ namespace MathClasses
             Set((float)Math.Cos(rad), (float)Math.Sin(rad), 0, -(float)Math.Sin(rad), (float)Math.Cos(rad), 0, 0, 0, 1);
         }
 
+        // Rotate all axes of matrix
         public void Rotate(double radX, double radY, double radZ)
         {
             // Make new matrix for each axis
@@ -159,6 +159,7 @@ namespace MathClasses
             Set(this * x);
 
         }
+
         // Set rotation of multiple axes at once
         public void SetRotate(float pitchX, float yawY, float rollZ)
         {
@@ -176,24 +177,7 @@ namespace MathClasses
             Set(z * y * x);
         }
 
-        // Rotate multiple axis at once
-        public void SetEuler(float pitchX, float yawY, float rollZ)
-        {
-            // Make new matrix for each axis
-            Matrix3 x = new Matrix3();
-            Matrix3 y = new Matrix3();
-            Matrix3 z = new Matrix3();
-
-            // Set rotate for each value
-            x.SetRotateX(pitchX);
-            y.SetRotateY(yawY);
-            z.SetRotateZ(rollZ);
-
-            // Combine the rotations
-            Set(z * y * x);
-        }
-
-        // Set scale of matrix
+        // Set scale of matrix (Resets matrix)
         public void SetScaled(float x, float y, float z)
         {
             m00 = x; m01 = 0; m02 = 0;
@@ -221,6 +205,7 @@ namespace MathClasses
         {
             m20 = m20 + x; m21 = m21 + y;
         }
+
         // Set translation
         public void SetTranslation(float x, float y)
         {
@@ -255,5 +240,10 @@ namespace MathClasses
                 M1.GetRow(2).Dot(M2.GetColumn(2)));
         }
 
+        // Overload Vector added to matrix operator
+        public static Matrix3 operator +(Matrix3 M1, Vector3 v)
+        {
+            return new Matrix3(M1.m00 + v.x, M1.m01 + v.x, M1.m02 + v.x, M1.m10 + v.y, M1.m11 + v.y, M1.m12 + v.y, M1.m20 + v.z, M1.m21 + v.z, M1.m22 + v.z);
+        }
     }
 }

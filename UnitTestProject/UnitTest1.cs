@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MathClasses;
+using MathsClasses;
 
 namespace UnitTestProject
 {
@@ -771,18 +771,23 @@ namespace UnitTestProject
         [TestMethod]
         public void ColourCustomTest3()
         {
-            // Check if the colour constructor properly places each byte in correct place
-            Colour c = new Colour(0x5E, 0xFF, 0x00, 0xFA);
+            // Bitshift red into green position
+            Colour c = new Colour(0x5E, 0x00, 0x00, 0x00);
 
-            Assert.AreEqual<UInt32>(0x5EFF00FA, c.colour);
+            byte r = c.red;
+            // Remove the green and red bits
+            c.colour &= 0x0000ffff;
+            // Bit shift the red value and mask it into the green position
+            c.colour |= (UInt32)r << 16;
+
+            Assert.AreEqual<UInt32>(0x005E0000, c.colour);
         }
         
         [TestMethod]
         public void ColourCustomTest4()
         {
-            // Check the binary and decimal value of colour when the value of green is set to 94.
-            Colour c = new Colour();
-            c.green = 94;
+            // Check the binary and decimal value of colour when the value of green has been set
+            Colour c = new Colour(0x00, 0x5E, 0x00, 0x00);
             Assert.AreEqual<UInt32>(0b00000000010111100000000000000000, c.colour);
             Assert.AreEqual<UInt32>(6160384, c.colour);
         }

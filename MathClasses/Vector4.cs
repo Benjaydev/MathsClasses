@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathClasses
+namespace MathsClasses
 {
     public class Vector4
     {
@@ -66,10 +66,16 @@ namespace MathClasses
             return (x * v.x) + (y * v.y) + (z * v.z) + (w * v.w);
         }
 
+        // Calculate the squared maginitude of vector (Squared Length)
+        public float MagnitudeSqr()
+        {
+            return this.Dot(this);
+        }
+
         // Calculate the maginitude of vector (Length)
         public float Magnitude()
         {
-            return (float)Math.Sqrt(this.Dot(this));
+            return (float)Math.Sqrt(MagnitudeSqr());
         }
 
         // Normalise this vector
@@ -80,6 +86,12 @@ namespace MathClasses
             y /= magnitude;
             z /= magnitude;
             w /= magnitude;
+        }
+        // Return the normalised vector
+        public Vector4 Normalized()
+        {
+            float magnitude = Magnitude();
+            return new Vector4(x / magnitude, y / magnitude, z / magnitude, w / magnitude);
         }
 
         // Calculate and return the cross product of this vector and another vector (There is no mathematical operation for getting cross product of Vector4, thus w should be returned as 0)
